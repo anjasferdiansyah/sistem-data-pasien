@@ -10,12 +10,23 @@ class DataPasienController extends Controller
     public function index()
     {
         $dataPasien = DataPasien::latest()->paginate(10);
-        return view('data-pasien.index', compact('dataPasien'));
+        return view('pasien.index', compact('dataPasien'));
+    }
+
+    public function dashboard()
+    {
+        $recentPatients = DataPasien::latest()->take(5)->get();
+        $totalPatients = DataPasien::count();
+        $avgAge = DataPasien::avg('umur');
+        $youngest = DataPasien::min('umur');
+        $oldest = DataPasien::max('umur');
+        
+        return view('dashboard', compact('recentPatients', 'totalPatients', 'avgAge', 'youngest', 'oldest'));
     }
 
     public function create()
     {
-        return view('data-pasien.create');
+        return view('pasien.create');
     }
 
     public function store(Request $request)
@@ -41,12 +52,12 @@ class DataPasienController extends Controller
 
     public function show(DataPasien $dataPasien)
     {
-        return view('data-pasien.show', compact('dataPasien'));
+        return view('pasien.show', compact('dataPasien'));
     }
 
     public function edit(DataPasien $dataPasien)
     {
-        return view('data-pasien.edit', compact('dataPasien'));
+        return view('pasien.edit', compact('dataPasien'));
     }
 
     public function update(Request $request, DataPasien $dataPasien)
