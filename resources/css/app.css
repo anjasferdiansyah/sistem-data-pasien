@@ -1,11 +1,559 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+/* ==========================================
+   Custom Theme & Design System
+   ========================================== */
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --color-primary-50: #eff6ff;
+    --color-primary-100: #dbeafe;
+    --color-primary-200: #bfdbfe;
+    --color-primary-300: #93c5fd;
+    --color-primary-400: #60a5fa;
+    --color-primary-500: #3b82f6;
+    --color-primary-600: #2563eb;
+    --color-primary-700: #1d4ed8;
+    --color-primary-800: #1e40af;
+    --color-primary-900: #1e3a8a;
+
+    --color-accent-400: #a78bfa;
+    --color-accent-500: #8b5cf6;
+    --color-accent-600: #7c3aed;
+
+    --color-success-400: #34d399;
+    --color-success-500: #10b981;
+    --color-success-600: #059669;
+
+    --color-danger-400: #f87171;
+    --color-danger-500: #ef4444;
+    --color-danger-600: #dc2626;
+
+    --color-warning-400: #fbbf24;
+    --color-warning-500: #f59e0b;
+    --color-warning-600: #d97706;
+
+    --color-dark-700: #1e293b;
+    --color-dark-800: #0f172a;
+    --color-dark-900: #020617;
+}
+
+/* ==========================================
+   Google Font Import
+   ========================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ==========================================
+   Base Styles
+   ========================================== */
+* {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: #f1f5f9;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================
+   Scrollbar Styling
+   ========================================== */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* ==========================================
+   Animations
+   ========================================== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+    50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.5); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-slide-in-left {
+    animation: slideInLeft 0.5s ease-out forwards;
+}
+
+.animate-slide-in-right {
+    animation: slideInRight 0.5s ease-out forwards;
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.3s ease-out forwards;
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Staggered animation delays */
+.delay-100 { animation-delay: 0.1s; opacity: 0; }
+.delay-200 { animation-delay: 0.2s; opacity: 0; }
+.delay-300 { animation-delay: 0.3s; opacity: 0; }
+.delay-400 { animation-delay: 0.4s; opacity: 0; }
+
+/* ==========================================
+   Glassmorphism
+   ========================================== */
+.glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-dark {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================================
+   Gradient Backgrounds
+   ========================================== */
+.gradient-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+}
+
+.gradient-dark {
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+}
+
+.gradient-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+}
+
+/* ==========================================
+   Sidebar Styles
+   ========================================== */
+.sidebar {
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    transition: width 0.3s ease;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    color: #94a3b8;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, #3b82f6, #8b5cf6);
+    border-radius: 0 3px 3px 0;
+    transform: scaleY(0);
+    transition: transform 0.2s ease;
+}
+
+.sidebar-link:hover {
+    color: #e2e8f0;
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.sidebar-link:hover::before {
+    transform: scaleY(1);
+}
+
+.sidebar-link.active {
+    color: #ffffff;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.15));
+}
+
+.sidebar-link.active::before {
+    transform: scaleY(1);
+}
+
+/* ==========================================
+   Card Styles
+   ========================================== */
+.stat-card {
+    background: #ffffff;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border-radius: 1rem 1rem 0 0;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card.blue::before {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+}
+
+.stat-card.purple::before {
+    background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+}
+
+.stat-card.green::before {
+    background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+.stat-card.orange::before {
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+/* ==========================================
+   Table Styles
+   ========================================== */
+.data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.data-table thead th {
+    background: #f8fafc;
+    padding: 0.875rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    border-bottom: 2px solid #e2e8f0;
+    text-align: left;
+}
+
+.data-table tbody tr {
+    transition: all 0.15s ease;
+}
+
+.data-table tbody tr:hover {
+    background: #f1f5f9;
+}
+
+.data-table tbody td {
+    padding: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.875rem;
+    color: #334155;
+}
+
+/* ==========================================
+   Button Styles
+   ========================================== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+    transform: translateY(-1px);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+    transform: translateY(-1px);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+    transform: translateY(-1px);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #d97706, #b45309);
+    box-shadow: 0 6px 20px rgba(217, 119, 6, 0.4);
+    transform: translateY(-1px);
+}
+
+.btn-ghost {
+    background: transparent;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+}
+
+.btn-ghost:hover {
+    background: #f1f5f9;
+    color: #334155;
+    border-color: #cbd5e1;
+}
+
+/* ==========================================
+   Form Styles
+   ========================================== */
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    color: #1e293b;
+    background: #ffffff;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.form-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.form-input::placeholder {
+    color: #94a3b8;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.01em;
+}
+
+/* ==========================================
+   Modal Backdrop
+   ========================================== */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 1.25rem;
+    padding: 2rem;
+    max-width: 28rem;
+    width: 90%;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+    animation: scaleIn 0.2s ease-out;
+}
+
+/* ==========================================
+   Login Page Styles
+   ========================================== */
+.login-bg {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.login-bg::before {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.15), transparent 70%);
+    top: -100px;
+    right: -100px;
+    border-radius: 50%;
+}
+
+.login-bg::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.1), transparent 70%);
+    bottom: -100px;
+    left: -100px;
+    border-radius: 50%;
+}
+
+.login-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* ==========================================
+   Toast Notification
+   ========================================== */
+.toast {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 100;
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    animation: slideInRight 0.3s ease-out;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.toast-success {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.toast-error {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+.toast-info {
+    background: #eff6ff;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+}
+
+/* ==========================================
+   Badge
+   ========================================== */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-blue {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.badge-green {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.badge-purple {
+    background: #f3e8ff;
+    color: #7c3aed;
 }
